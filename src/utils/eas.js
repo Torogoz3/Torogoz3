@@ -1,7 +1,13 @@
-import { BrowserProvider } from "ethers";
+import { BrowserProvider, Contract, isAddress, getAddress } from "ethers";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 
+// Dirección del contrato EAS
 const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e";
+
+// ABI mínima necesaria para el contrato EAS
+const EAS_ABI = [
+  "event Attested(address indexed recipient, bytes32 indexed uid, bytes32 indexed schema)"
+];
 
 // Función para inicializar el contrato EAS con el proveedor de MetaMask
 export const initializeEAS = async () => {
@@ -10,20 +16,18 @@ export const initializeEAS = async () => {
       throw new Error("MetaMask no está instalado.");
     }
 
-    // Conecta MetaMask usando BrowserProvider de ethers.js
     const provider = new BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
     const account = await signer.getAddress();
 
-    // Inicializa el contrato EAS con el firmante
     const eas = new EAS(EASContractAddress);
     eas.connect(signer);
 
-    return { eas, account };
+    const contract = new Contract(EASContractAddress, EAS_ABI, provider);
+
+    return { eas, contract, account };
   } catch (error) {
-    if (error.code === 4001) {
-      throw new Error("Usuario rechazó la conexión a MetaMask.");
-    }
+    console.error("Error al inicializar EAS:", error);
     throw error;
   }
 };
@@ -40,9 +44,14 @@ export const createCredentialAttestation = async ({
     throw new Error("Todos los campos son requeridos.");
   }
 
+  if (!isAddress(recipient)) {
+    throw new Error("La dirección Ethereum proporcionada no es válida.");
+  }
+
+  const normalizedRecipient = getAddress(recipient);
+
   const { eas } = await initializeEAS();
 
-  // UID del esquema registrado en EAS
   const schemaUID =
     "0x934fa076992c05c87e7a574767c4328cdde72b064891ce620c5f3126b046f4c4";
 
@@ -57,24 +66,21 @@ export const createCredentialAttestation = async ({
       { name: "LastName", value: lastName, type: "string" },
     ]);
 
-    // Enviar la transacción para crear la atestación
     const tx = await eas.attest({
       schema: schemaUID,
       data: {
-        recipient, // Dirección del destinatario
-        expirationTime: 0, // Sin expiración
-        revocable: true, // Revocable
+        recipient: normalizedRecipient,
+        expirationTime: 0,
+        revocable: true,
         refUID:
-          "0x0000000000000000000000000000000000000000000000000000000000000000", // Sin referencia
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
         data: encodedData,
       },
     });
 
-    // Espera la confirmación de la transacción
-    const txReceipt = await tx.wait();
-    return txReceipt;
+    return await tx.wait();
   } catch (error) {
-    console.error("Error al crear la atestación: " + error.message);
+    console.error("Error al crear la atestación:", error);
     throw error;
   }
 };
@@ -82,24 +88,73 @@ export const createCredentialAttestation = async ({
 // Función para recuperar las atestaciones de un usuario
 export const getUserAttestations = async (recipientAddress) => {
   try {
-    const { eas } = await initializeEAS();
+    const { contract } = await initializeEAS();
 
-    // Recupera las atestaciones asociadas a la dirección del usuario
-    const attestations = await eas.getAttestations({
-      recipient: recipientAddress,
+    const filter = contract.filters.Attested(recipientAddress);
+
+    const logs = await contract.queryFilter(filter);
+
+    return logs.map((log) => {
+      const { recipient, uid, schema } = log.args;
+
+      return {
+        recipient,
+        uid,
+        schema,
+        txHash: log.transactionHash,
+      };
     });
+  } catch (error) {
+    console.error("Error al obtener las atestaciones:", error);
+    throw error;
+  }
+};
 
-    // Mapear las atestaciones para extraer datos relevantes
+// Función para obtener el rol del usuario
+export const getUserRole = async (walletAddress) => {
+  try {
+    if (walletAddress.endsWith("1")) {
+      return "institution";
+    }
+    return "student";
+  } catch (error) {
+    console.error("Error al determinar el rol del usuario:", error);
+    throw error;
+  }
+};
+
+// Función para obtener métricas de una institución
+export const getInstitutionMetrics = async (institutionAddress) => {
+  try {
+    const attestations = await getUserAttestations(institutionAddress);
+    const totalCertificates = attestations.length;
+    const totalParticipants = new Set(attestations.map((a) => a.recipient)).size;
+
+    return {
+      totalCertificates,
+      totalParticipants,
+    };
+  } catch (error) {
+    console.error("Error al obtener métricas de la institución:", error);
+    throw error;
+  }
+};
+
+// Función para obtener certificados de un estudiante
+export const getUserCertificates = async (studentAddress) => {
+  try {
+    const attestations = await getUserAttestations(studentAddress);
+
     return attestations.map((attestation) => ({
-      institute: attestation.data.Institute,
-      course: attestation.data.Course,
-      firstName: attestation.data.FirstName,
-      lastName: attestation.data.LastName,
+      institute: attestation.schema,
+      course: "Curso Genérico",
+      firstName: "Nombre",
+      lastName: "Apellido",
       recipient: attestation.recipient,
       txHash: attestation.txHash,
     }));
   } catch (error) {
-    console.error("Error al obtener las atestaciones: " + error.message);
+    console.error("Error al obtener certificados del estudiante:", error);
     throw error;
   }
 };

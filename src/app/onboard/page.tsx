@@ -9,6 +9,8 @@ import { FiUser, FiFileText, FiCheck } from 'react-icons/fi'
 import { useEffect, useState } from 'react'
 import { createCredentialAttestation } from '../../utils/eas'
 //import { format } from 'path'
+import { isAddress } from "ethers";
+
 
 const steps = [
   { id: 'connect', title: 'Connect Wallet', icon: FiUser },
@@ -49,6 +51,11 @@ export default function OnboardPage() {
           !formData.firstName || !formData.lastName || !formData.recipient) {
         throw new Error("Todos los campos son requeridos")
       }
+
+      // Validar que la dirección Ethereum sea válida
+    if (!isAddress(formData.recipient)) {
+      throw new Error("La dirección Ethereum proporcionada no es válida");
+    }
 
       const attestationResult = await createCredentialAttestation({
         institute: formData.institute,

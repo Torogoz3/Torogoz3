@@ -1,3 +1,3 @@
 ## Torogoz 3
 
-![TorogozAuth Logo](./public/cabezatorogoz22.png)
+![TorogozAuth Logo](./cabezatorogoz22.png)

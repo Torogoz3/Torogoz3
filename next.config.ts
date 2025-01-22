@@ -1,6 +1,6 @@
-import type { NextConfig } from "next";
+//import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   output: 'export', // Genera un sitio estático
   basePath: '/Torogoz3', // Reemplaza con el nombre de tu repositorio
   images: {

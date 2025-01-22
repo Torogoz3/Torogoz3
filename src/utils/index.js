@@ -1,4 +1,3 @@
-import Web3 from 'web3'
 import Torogoz from './Torogoz.json'
 
 export const  contract= async () => {

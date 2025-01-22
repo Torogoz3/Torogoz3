@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build": "next build && next export",
+    "deploy": "npm run build && git add . && git commit -m 'Deploy to GitHub Pages' && git push"
   },
   "dependencies": {
     "@ethereum-attestation-service/eas-sdk": "^2.7.0",
@@ -24,7 +25,7 @@
     "ethers": "^6.13.5",
     "ipfs-http-client": "^60.0.1",
     "lucide-react": "^0.469.0",
-    "next": "^15.1.4",
+    "next": "^15.1.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",

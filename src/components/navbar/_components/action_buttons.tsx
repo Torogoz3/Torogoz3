@@ -30,12 +30,16 @@ const ActionButtons = () => {
               <div>Dashboard</div>
             </Link>
           ) : authenticated ? (
-            <Link href="/onboard" className="lg:flex items-center hidden">
-              <div>Get  </div>
+            <Link
+              href="/onboard"
+              className="lg:flex items-center hidden text-gray-600 hover:text-black transition-all  text-base font-russo"
+            >
+              <div className="-ml-9">Get</div> {/* Ajuste para mover el "Get" */}
             </Link>
           ) : null}
         </div>
-        <div className="flex lg:space-x-2 items-center pr-4">
+        <div className="flex lg:space-x-6 items-center pr-4">
+          {/* Ajuste del espacio general entre "Get" y el botón */}
           {authenticated ? (
             <Button className="hidden lg:block" onClick={logout}>
               Disconnect

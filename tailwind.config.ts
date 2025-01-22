@@ -77,7 +77,12 @@ export default {
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
+  		},
+		  fontFamily: {
+			sans: ['ui-sans-serif', 'system-ui'],
+			russo: ['Russo One', 'sans-serif'], 
+			caveat: ['Caveat', 'Bold'],
+		  },
   	}
   },
   plugins: [require("tailwindcss-animate")],

@@ -28,12 +28,14 @@ const DropdownMenu: React.FC<DropDownMenuProps> = ({ onClose, userInfo }) => {
           <p>Loading user info...</p>
         ) : userInfo === "User exists" ? (
           <Link href="/dashboard">
-            <Button className="w-full">Dashboard</Button>
+            <Button className="w-full">
+            <span className="text-base font-russo -ml-2">Get</span>
+            </Button>
           </Link>
         ) : (
           <Link href="/onboard">
             <Button variant="outline" className="w-full">
-              Get
+            <span className="text-base font-russo -ml-2">Get</span>
             </Button>
           </Link>
         )}

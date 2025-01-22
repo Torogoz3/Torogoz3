@@ -22,7 +22,7 @@ export function Menu() {
         <NavigationMenuItem>
           <Link href={"/"} legacyBehavior passHref>
             <NavigationMenuLink
-              className={`text-gray-600 hover:text-blue-600 transition-all text-base font-caveat ${navigationMenuTriggerStyle()}`}
+              className={`text-gray-600 hover:text-black-600 transition-all text-base font-russo ${navigationMenuTriggerStyle()}`}
             >
               <div className="text-lg font-medium">Home</div> {/* Modificando tamaño y fuente */}
             </NavigationMenuLink>
@@ -32,7 +32,7 @@ export function Menu() {
         <NavigationMenuItem>
           <Link href={"/verify"} legacyBehavior passHref>
             <NavigationMenuLink
-              className={`text-gray-600 hover:text-blue-600 transition-all text-base font-caveat ${navigationMenuTriggerStyle()}`}
+              className={`text-gray-600 hover:text-black-600 transition-all text-base font-russo ${navigationMenuTriggerStyle()}`}
             >
               <div className="text-lg font-medium">Verify Credentials</div> {/* Modificando tamaño y fuente */}
             </NavigationMenuLink>

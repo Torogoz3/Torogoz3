@@ -27,7 +27,7 @@ export default function HeroSection() {
           <p className="text-gray-600 text-lg font-russo">
             At Torogoz 3, we redefine identity verification through blockchain-powered decentralized solutions. Secure, reliable, and efficient, designed for the future.
           </p>
-          <ul className="space-y-4 text-gray-600 text-lg font-bold font-caveat">
+          <ul className="space-y-4 text-gray-600 text-lg font-bold font-russo">
             <li className="flex items-center">
               <span className="text-violet-600 text-2xl mr-2">✔</span>
               Decentralized identity verification.
@@ -74,7 +74,7 @@ export default function HeroSection() {
           <p className="text-gray-600 text-lg font-russo">
             Create it once, use it anywhere; always ready, secure, and reliable with Torogoz 3.
           </p>
-          <ul className="space-y-4 text-gray-600 text-lg font-bold font-caveat">
+          <ul className="space-y-4 text-gray-600 text-lg font-bold font-russo">
             <li className="flex items-center">
               <span className="text-violet-600 text-2xl mr-2">✔</span>
               Always accessible and private.

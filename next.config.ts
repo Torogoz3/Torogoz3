@@ -1,8 +1,10 @@
-import type { NextConfig } from 'next';
+import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
-  // Otras configuraciones que puedas tener
+  reactStrictMode: true,
+  images: {
+    domains: ["example.com"], // Cambia esto por los dominios que uses para imágenes externas
+  },
 };
 
 export default nextConfig;

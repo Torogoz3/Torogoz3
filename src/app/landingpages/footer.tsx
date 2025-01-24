@@ -44,7 +44,7 @@ const Footer = () => {
 
           {/* Créditos */}
           <div className="text-sm mt-4 md:mt-2">
-            © {new Date().getFullYear()} IDΞN3. All rights reserved.
+            © {new Date().getFullYear()} IDΞN3 LLC. All rights reserved.
           </div>
         </div>
       </div>

@@ -3,6 +3,9 @@ import Navbar from "../../components/navbar/navbar";
 import HeroCarousel from "../landingpages/herocarousel";
 import HeroSection from "../landingpages/hero_section";
 import Section from "../landingpages/section";
+import Footer from "./footer";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
 
 const LandingPage = () => {
   return (
@@ -11,6 +14,7 @@ const LandingPage = () => {
       <HeroCarousel />
       <HeroSection />
       <Section />
+      <Footer />
     </div>
   );
 };

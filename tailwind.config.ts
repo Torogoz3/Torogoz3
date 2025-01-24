@@ -81,7 +81,7 @@ export default {
 		  fontFamily: {
 			sans: ['ui-sans-serif', 'system-ui'],
 			russo: ['Russo One', 'sans-serif'], 
-			caveat: ['Caveat', 'Bold'],
+			caveat: ['Roboto', 'SemiBold'],
 		  },
   	}
   },

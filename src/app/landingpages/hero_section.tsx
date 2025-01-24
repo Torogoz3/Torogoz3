@@ -1,33 +1,20 @@
-'use client'
-import Image from 'next/image'
-import { Button } from '../../components/ui/button'
+'use client';
 
-export default function HeroSection() {
+import Image from 'next/image';
+import { Button } from '../../components/ui/button';
+
+const HeroSection = () => {
   return (
     <main className="relative bg-white text-black">
-      {/* Imagen principal fija al inicio */}
-      <section className="container mx-auto px-4 py-8 flex items-center justify-center h-screen">
-        <div className="relative w-80 h-80 md:w-96 md:h-96 flex items-center justify-center">
-          <Image
-            src="/torogozlogo.png"
-            alt="Torogoz Logo"
-            width={950}
-            height={950}
-            priority
-            className="object-contain mt-20"
-          />
-        </div>
-      </section>
-
       {/* Contenido principal */}
       <section className="container mx-auto px-6 py-20 min-h-screen bg-gray-100 flex flex-col md:flex-row items-center gap-12">
         {/* Contenedor de texto */}
         <div className="space-y-8 md:w-1/2">
-          <h1 className="text-4xl md:text-5xl font-bold font-russo">Why Torogoz 3</h1>
+          <h1 className="text-4xl md:text-5xl font-bold font-russo">Why Torogoz 3?</h1>
           <p className="text-gray-600 text-lg font-russo">
             At Torogoz 3, we redefine identity verification through blockchain-powered decentralized solutions. Secure, reliable, and efficient, designed for the future.
           </p>
-          <ul className="space-y-4 text-gray-600 text-lg font-bold font-russo">
+          <ul className="space-y-4 text-gray-600 text-lg font-bold font-roboto">
             <li className="flex items-center">
               <span className="text-violet-600 text-2xl mr-2">✔</span>
               Decentralized identity verification.
@@ -74,7 +61,7 @@ export default function HeroSection() {
           <p className="text-gray-600 text-lg font-russo">
             Create it once, use it anywhere; always ready, secure, and reliable with Torogoz 3.
           </p>
-          <ul className="space-y-4 text-gray-600 text-lg font-bold font-russo">
+          <ul className="space-y-4 text-gray-600 text-lg font-bold font-roboto">
             <li className="flex items-center">
               <span className="text-violet-600 text-2xl mr-2">✔</span>
               Always accessible and private.
@@ -136,5 +123,7 @@ export default function HeroSection() {
         </div>
       </section>
     </main>
-  )
-}
+  );
+};
+
+export default HeroSection;

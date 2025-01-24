@@ -2,12 +2,15 @@
 
 "use client";
 import { defineChain } from "viem";
-import { Caveat } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 
 import { PrivyProvider } from "@privy-io/react-auth";
 import React from "react";
-const font = Caveat({ subsets: ["latin"] });
+const font = Roboto({
+  subsets: ["latin"],
+  weight: "100"
+});
 
 const Sepolia = defineChain({
   id: 11155111 ,
@@ -43,7 +46,7 @@ export default function RootLayout({
             appearance: {
               theme: "light",
               accentColor: "#676FFF",
-              logo: "/cabezatorogoz.png",
+              logo: "/cabezatorogoz22.png",
             },
             embeddedWallets: {
               createOnLogin: "users-without-wallets",

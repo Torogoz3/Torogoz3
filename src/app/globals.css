@@ -2,8 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Agregar las fuentes */
+@font-face {
+  font-family: 'Russo One';
+  src: url('/fonts/RussoOne.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/RobotoSemibold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* Configuración global */
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', sans-serif; /* Inter es la fuente predeterminada */
 }
 
 body {

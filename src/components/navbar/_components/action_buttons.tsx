@@ -24,7 +24,7 @@ const ActionButtons = () => {
   return (
     <div className="pr-2">
       <div className="items-center justify-center flex">
-        <div className="flex xl:space-x-4">
+        <div className="flex xl:space-x-4 text-base font-russo">
           {authenticated && userInfo === "User exists" ? (
             <Link href="/dashboard" className="lg:flex items-center hidden">
               <div>Dashboard</div>

@@ -12,8 +12,6 @@ import {
   navigationMenuTriggerStyle,
 } from "../../ui/navigation-menu";
 
-// Configuración de la fuente Russo One
-{/*const russoOne = Russo_One({ weight: "400", subsets: ["latin"] });*/}
 
 export function Menu() {
   return (

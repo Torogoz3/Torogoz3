@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 "use client";
 import { defineChain } from "viem";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-
 import { PrivyProvider } from "@privy-io/react-auth";
 import React from "react";
+
+
 const font = Roboto({
   subsets: ["latin"],
-  weight: "100"
+  weight: "100",
 });
 
 const Sepolia = defineChain({
-  id: 11155111 ,
+  id: 11155111,
   name: "Sepolia",
   network: "Sepolia",
   nativeCurrency: {
@@ -25,7 +25,6 @@ const Sepolia = defineChain({
     default: {
       http: ["https://eth-sepolia.public.blastapi.io"],
     },
-  
   } as any,
   blockExplorers: {
     default: { name: "Explorer", url: "https://sepolia.etherscan.io/" },
@@ -39,6 +38,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+     
+      
       <body className={font.className}>
         <PrivyProvider
           appId="cm3q1swmn00hlyml9gr6ij0z8"
@@ -61,4 +62,3 @@ export default function RootLayout({
     </html>
   );
 }
-

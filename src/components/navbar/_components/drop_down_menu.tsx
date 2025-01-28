@@ -9,9 +9,10 @@ interface DropDownMenuProps {
   onClose: () => void;
   userInfo: string;
   login: () => void;
+  logout: () => void;
 }
 
-const DropdownMenu: React.FC<DropDownMenuProps> = ({ onClose, userInfo, login }) => {
+const DropdownMenu: React.FC<DropDownMenuProps> = ({ onClose, userInfo, login, logout }) => {
   return (
     <div className="w-screen h-screen bg-white px-2 absolute right-0 xl:hidden z-50">
       {/* Acordeón con enlaces */}
@@ -29,30 +30,43 @@ const DropdownMenu: React.FC<DropDownMenuProps> = ({ onClose, userInfo, login })
         {/* Estado del usuario */}
         {userInfo === "Loading..." ? (
           <p>Loading user info...</p>
-        ) : userInfo === "User exists" ? (
-          <Link href="/dashboard">
-            <Button className="w-full">
-              <span className="text-base font-russo -ml-2">Go to Dashboard</span>
-            </Button>
-          </Link>
         ) : (
-          <Link href="/onboard">
-            <Button variant="outline" className="w-full">
-              <span className="text-base font-russo -ml-2">Get Started</span>
-            </Button>
-          </Link>
+          <>
+            <Link href="/dashboard" onClick={onClose}>
+              <Button className="w-full hover:scale-105 transition-transform duration-300">
+                Dashboard
+              </Button>
+            </Link>
+            <Link href="/onboard" onClick={onClose}>
+              <Button className="w-full hover:scale-105 transition-transform duration-300">
+                Get
+              </Button>
+            </Link>
+          </>
         )}
 
-        {/* Botón de conectar */}
-        <div className="flex justify-center">
-          <Button onClick={login} className="w-full">
-            Connect
-          </Button>
-        </div>
+        {/* Botones "Connect" y "Disconnect" basados en el estado */}
+        {!userInfo || userInfo === "Loading..." ? (
+          <div className="flex justify-center">
+            <Button onClick={login} className="w-full hover:scale-105 transition-transform duration-300">
+              Connect
+            </Button>
+          </div>
+        ) : (
+          <div className="flex justify-center">
+            <Button onClick={logout} className="w-full hover:scale-105 transition-transform duration-300">
+              Disconnect
+            </Button>
+          </div>
+        )}
 
         {/* Botón para cerrar el menú */}
         <div className="flex justify-center pt-4">
-          <Button variant="outline" onClick={onClose} className="w-full">
+          <Button
+            variant="outline"
+            onClick={onClose}
+            className="w-full hover:scale-105 transition-transform duration-300"
+          >
             Close Menu
           </Button>
         </div>

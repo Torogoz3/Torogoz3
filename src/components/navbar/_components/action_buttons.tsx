@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { usePrivy } from "@privy-io/react-auth";
 import { Button } from "../../ui/button";
 import { X, AlignJustify } from "lucide-react";
@@ -10,16 +10,6 @@ import DropdownMenu from "../_components/drop_down_menu";
 const ActionButtons = () => {
   const { authenticated, login, logout } = usePrivy();
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const [userInfo, setUserInfo] = useState<string>("Loading...");
-
-  useEffect(() => {
-    if (authenticated) {
-      // Aquí podrías obtener más detalles del usuario si es necesario
-      setUserInfo("User exists");
-    } else {
-      setUserInfo("Loading...");
-    }
-  }, [authenticated]);
 
   const toggleDropdown = () => {
     setDropdownVisible(!isDropdownVisible);
@@ -32,30 +22,31 @@ const ActionButtons = () => {
   return (
     <div className="pr-2">
       <div className="items-center justify-center flex">
-        {/* Botón para Desktop */}
-        <div className="flex xl:space-x-4 text-base font-russo">
-          {authenticated && userInfo === "User exists" ? (
-            <Link href="/dashboard" className="lg:flex items-center hidden">
-              <div>Dashboard</div>
-            </Link>
-          ) : authenticated ? (
-            <Link
-              href="/onboard"
-              className="lg:flex items-center hidden text-gray-600 hover:text-black transition-all text-base font-russo"
-            >
-              <div className="-ml-9">Get</div>
-            </Link>
-          ) : null}
+        {/* Mostrar botones para desktop */}
+        <div className="flex xl:space-x-8 text-base font-russo hidden lg:flex">
+          {authenticated && (
+            <>
+              <Link href="/dashboard">
+                <Button className="hover:scale-105 transition-transform duration-300 ml-2">Dashboard</Button>
+              </Link>
+              <Link href="/onboard">
+                <Button className="hover:scale-105 transition-transform duration-300 ml-0.5">
+                  Get
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
-        <div className="flex lg:space-x-6 items-center pr-4">
-          {/* Botón de conectar/desconectar */}
-          {authenticated ? (
-            <Button className="hidden lg:block" onClick={logout}>
-              Disconnect
-            </Button>
-          ) : (
+
+        {/* Botón conectar para desktop */}
+        <div className="flex lg:space-x-6 items-center pr-4 ml-8">
+          {!authenticated ? (
             <Button className="hidden lg:block" onClick={login}>
               Connect
+            </Button>
+          ) : (
+            <Button className="hidden lg:block" onClick={logout}>
+              Disconnect
             </Button>
           )}
         </div>
@@ -75,9 +66,10 @@ const ActionButtons = () => {
 
       {isDropdownVisible && (
         <DropdownMenu
-          userInfo={userInfo}
+          userInfo={authenticated ? "User exists" : "Loading..."}
           onClose={closeDropdown}
           login={login}
+          logout={logout} 
         />
       )}
     </div>

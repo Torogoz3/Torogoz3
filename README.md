@@ -52,7 +52,9 @@ Please review our contribution guidelines before getting started.
 
 ## License
 
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
+This project is licensed under the [GNU Affero General Public License v3.0](LICENSE). 
+
+You may use, modify, and distribute this software under the terms of the license. See the full license text in the [LICENSE](LICENSE) file.
 
 ---
 

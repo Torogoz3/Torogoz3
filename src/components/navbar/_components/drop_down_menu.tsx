@@ -10,9 +10,10 @@ interface DropDownMenuProps {
   userInfo: string;
   login: () => void;
   logout: () => void;
+  verifiedInstitution: boolean;
 }
 
-const DropdownMenu: React.FC<DropDownMenuProps> = ({ onClose, userInfo, login, logout }) => {
+const DropdownMenu: React.FC<DropDownMenuProps> = ({ onClose, userInfo, login, logout, verifiedInstitution }) => {
   return (
     <div className="w-screen h-screen bg-white px-2 absolute right-0 xl:hidden z-50">
       {/* Acordeón con enlaces */}
@@ -27,25 +28,27 @@ const DropdownMenu: React.FC<DropDownMenuProps> = ({ onClose, userInfo, login, l
 
       {/* Sección de usuario y botones */}
       <div className="pt-12 space-y-4 flex flex-col px-4">
-        {/* Estado del usuario */}
         {userInfo === "Loading..." ? (
           <p>Loading user info...</p>
         ) : (
           <>
-            <Link href="/dashboard" onClick={onClose}>
-              <Button className="w-full hover:scale-105 transition-transform duration-300">
-                Dashboard
-              </Button>
-            </Link>
-            <Link href="/onboard" onClick={onClose}>
-              <Button className="w-full hover:scale-105 transition-transform duration-300">
-                Get
-              </Button>
-            </Link>
+            {verifiedInstitution ? (
+              <Link href="/dashboard" onClick={onClose}>
+                <Button className="w-full hover:scale-105 transition-transform duration-300">
+                  Dashboard
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/onboard" onClick={onClose}>
+                <Button className="w-full hover:scale-105 transition-transform duration-300">
+                  Verify Institution
+                </Button>
+              </Link>
+            )}
           </>
         )}
 
-        {/* Botones "Connect" y "Disconnect" basados en el estado */}
+        {/* Botones Connect / Disconnect */}
         {!userInfo || userInfo === "Loading..." ? (
           <div className="flex justify-center">
             <Button onClick={login} className="w-full hover:scale-105 transition-transform duration-300">

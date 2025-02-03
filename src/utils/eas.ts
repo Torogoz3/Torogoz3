@@ -142,7 +142,10 @@ export async function getAttestationsBySchema(
   const filter = contract.filters.Attested(address, null, schemaUID);
 
   try {
-    const logs = await contract.queryFilter(filter);
+    
+    const fromBlock = 21423350;
+    const toBlock = "latest";
+    const logs = await contract.queryFilter(filter, fromBlock, toBlock);
     const iface = new Interface(EAS_ABI);
 
     const schemaStr =

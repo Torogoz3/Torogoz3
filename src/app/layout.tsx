@@ -12,22 +12,22 @@ const font = Roboto({
   weight: "100",
 });
 
-const Sepolia = defineChain({
-  id: 11155111,
-  name: "Sepolia",
-  network: "Sepolia",
+const Base = defineChain({
+  id: 84532,
+  name: "Base-Sepolia",
+  network: "Base-Sepolia",
   nativeCurrency: {
     decimals: 18,
-    name: "Sepolia",
+    name: "Base-Sepolia",
     symbol: "ETH",
   },
   rpcUrls: {
     default: {
-      http: ["https://eth-sepolia.public.blastapi.io"],
+      http: ["https://sepolia.base.org"],
     },
   } as any,
   blockExplorers: {
-    default: { name: "Explorer", url: "https://sepolia.etherscan.io/" },
+    default: { name: "Explorer", url: "https://sepolia.basescan.org" },
   },
 }) as any;
 
@@ -52,8 +52,8 @@ export default function RootLayout({
             embeddedWallets: {
               createOnLogin: "users-without-wallets",
             },
-            defaultChain: Sepolia,
-            supportedChains: [Sepolia],
+            defaultChain: Base,
+            supportedChains: [Base],
           }}
         >
           {children}

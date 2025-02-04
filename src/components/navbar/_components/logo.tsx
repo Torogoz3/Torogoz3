@@ -10,6 +10,7 @@ const Logo: React.FC = () => {
                 width={150} // Ajusta según el tamaño real
                 height={50} // Ajusta según el tamaño real
                 className="ml-3 mr-2"
+                priority
             />
         </Link>
     );

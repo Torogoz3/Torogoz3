@@ -143,7 +143,7 @@ export async function getAttestationsBySchema(
 
   try {
     
-    const fromBlock = 21423350;
+    const fromBlock = 21436523;
     const toBlock = "latest";
     const logs = await contract.queryFilter(filter, fromBlock, toBlock);
     const iface = new Interface(EAS_ABI);

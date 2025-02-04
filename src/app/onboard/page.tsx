@@ -36,6 +36,20 @@ const Onboard = () => {
     })();
   }, []);
 
+  // Función simple de polling: reintenta consultar las atestaciones hasta cierto número de reintentos.
+  const pollVerification = async (retries = 5, interval = 5000) => {
+    for (let i = 0; i < retries; i++) {
+      const institutionAttestations = await getAttestationsBySchema("institution", account);
+      console.log(`Polling attempt ${i + 1}: found ${institutionAttestations.length} attestations for account ${account}`);
+      if (institutionAttestations.length > 0) {
+        return true;
+      }
+      await new Promise((resolve) => setTimeout(resolve, interval));
+    }
+    return false;
+  };
+
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!instituteName || !description || !logoFile) {
@@ -53,10 +67,13 @@ const Onboard = () => {
         Description: description,
         IPFSHash: ipfsHash,
       });
-      // Consulta nuevamente las atestaciones para confirmar la verificación.
-      const institutionAttestations = await getAttestationsBySchema("institution", account);
-      if (institutionAttestations.length > 0) {
+
+      // esto es para que  la atestación se indexe
+      const verifiedResult = await pollVerification(50, 5000); // 10 intentos, 5 segundos cada uno
+      if (verifiedResult) {
         setVerified(true);
+      } else {
+        setError("No se pudo confirmar la verificación en el tiempo esperado.");
       }
       setLoading(false);
     } catch (err) {
@@ -87,7 +104,7 @@ const Onboard = () => {
           </button>
         </div>
       ) : (
-        // Si aún no está verificada, mostramos el formulario.
+        // Si no esta verificada, se muestra el formulario.
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block font-medium">

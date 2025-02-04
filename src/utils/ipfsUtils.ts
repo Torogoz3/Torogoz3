@@ -1,4 +1,3 @@
-// utils/ipfsUtils.ts
 import axios from "axios";
 
 export async function uploadToPinata(file: File): Promise<string> {

@@ -128,6 +128,7 @@ export async function createCertificateAttestation(data: {
 
 // Obtiene las atestaciones de un esquema específico para una dirección dada
 export async function getAttestationsBySchema(
+  
   schemaType: "institution" | "certificate",
   address: string
 ): Promise<DecodedAttestation[]> {
@@ -135,6 +136,7 @@ export async function getAttestationsBySchema(
     throw new Error("El tipo de esquema especificado no es válido.");
   }
 
+  
   const { contract } = await initializeEAS();
   const schemaUID = SCHEMA_UIDS[schemaType];
 
@@ -143,7 +145,8 @@ export async function getAttestationsBySchema(
 
   try {
     
-    const fromBlock = 21436523;
+    const deploymentBlock = 21436886;
+    const fromBlock = deploymentBlock;
     const toBlock = "latest";
     const logs = await contract.queryFilter(filter, fromBlock, toBlock);
     const iface = new Interface(EAS_ABI);

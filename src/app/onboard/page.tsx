@@ -3,11 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { uploadToPinata } from "../../utils/ipfsUtils";
-import { 
-  initializeEAS, 
-  createInstitutionAttestation, 
-  getAttestationsBySchema 
-} from "../../utils/eas";
+import { initializeEAS, createInstitutionAttestation, getAttestationsBySchema } from "../../utils/eas";
+//import InstitutionAttestation from "../../components/InstitutionAttestation";
 
 const Onboard = () => {
   const [instituteName, setInstituteName] = useState("");
@@ -36,20 +33,6 @@ const Onboard = () => {
     })();
   }, []);
 
-  // Función simple de polling: reintenta consultar las atestaciones hasta cierto número de reintentos.
-  const pollVerification = async (retries = 5, interval = 5000) => {
-    for (let i = 0; i < retries; i++) {
-      const institutionAttestations = await getAttestationsBySchema("institution", account);
-      console.log(`Polling attempt ${i + 1}: found ${institutionAttestations.length} attestations for account ${account}`);
-      if (institutionAttestations.length > 0) {
-        return true;
-      }
-      await new Promise((resolve) => setTimeout(resolve, interval));
-    }
-    return false;
-  };
-
-  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!instituteName || !description || !logoFile) {
@@ -68,14 +51,9 @@ const Onboard = () => {
         IPFSHash: ipfsHash,
       });
 
-      // esto es para que  la atestación se indexe
-      const verifiedResult = await pollVerification(50, 5000); // 10 intentos, 5 segundos cada uno
-      if (verifiedResult) {
-        setVerified(true);
-      } else {
-        setError("No se pudo confirmar la verificación en el tiempo esperado.");
-      }
+      setVerified(true);
       setLoading(false);
+      handleContinue();
     } catch (err) {
       console.error(err);
       setError("Error al registrar la institución.");
@@ -91,25 +69,18 @@ const Onboard = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Verificación de Institución</h1>
       {verified ? (
-        // Si la institución ya está verificada, mostramos el mensaje y botón para continuar.
         <div>
           <p className="mb-4 text-green-600">
             Congratulations, for your verification, continue to your dashboard!
           </p>
-          <button 
-            onClick={handleContinue}
-            className="bg-blue-600 text-white px-4 py-2 rounded"
-          >
+          <button onClick={handleContinue} className="bg-blue-600 text-white px-4 py-2 rounded">
             Continue to Dashboard
           </button>
         </div>
       ) : (
-        // Si no esta verificada, se muestra el formulario.
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block font-medium">
-              Nombre de la Institución:
-            </label>
+            <label className="block font-medium">Nombre de la Institución:</label>
             <input
               type="text"
               value={instituteName}
